@@ -20,13 +20,17 @@ const useFilesData = () => {
 
   // Load file list on mount.
   useEffect(() => {
+    console.log('📋 useFilesData: Checking if need to load file list. Current length:', fileList.length)
     if (fileList.length === 0) {
+      console.log('📋 useFilesData: Dispatching fetchFileList()')
       dispatch(fetchFileList())
     }
   }, [dispatch, fileList.length])
 
   // Fetch rows when selection changes.
   useEffect(() => {
+    console.log('📊 useFilesData: Selection changed to:', selectedFile || 'ALL FILES')
+    console.log('📊 useFilesData: Dispatching fetchFilesData()')
     dispatch(fetchFilesData(selectedFile || undefined))
   }, [dispatch, selectedFile])
 
