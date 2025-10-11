@@ -1,0 +1,41 @@
+name: Frontend CI
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Build frontend image
+        run: docker compose build frontend
+
+      - name: Install dependencies
+        run: docker compose run --rm frontend npm ci
+
+      - name: Run lint
+        run: docker compose run --rm frontend npm run lint
+
+      - name: Run tests
+        run: docker compose run --rm frontend npm run test -- --runInBand
+
+      - name: Build production bundle
+        run: docker compose run --rm frontend npm run build
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down --volumes --remove-orphans

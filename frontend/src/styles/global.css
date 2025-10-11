@@ -1,0 +1,132 @@
+:root {
+  color-scheme: light;
+  width: 100%;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(241, 242, 246, 0.9)
+  );
+  min-height: 100vh;
+  width: 100%;
+}
+
+header.bg-danger {
+  background: linear-gradient(135deg, #7f3fd6, #6130b5);
+}
+
+.table-responsive {
+  background-color: #fff;
+}
+
+.table-fixed {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.table-column-file {
+  width: 20%;
+}
+
+.table-column-text {
+  width: 30%;
+}
+
+.table-column-number {
+  width: 15%;
+}
+
+.table-column-hex {
+  width: 35%;
+}
+
+.cell-content {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .table-column-file {
+    width: 25%;
+  }
+
+  .table-column-text {
+    width: 35%;
+  }
+
+  .table-column-number {
+    width: 15%;
+  }
+
+  .table-column-hex {
+    width: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-column-hex .cell-content {
+    white-space: normal;
+    word-break: break-all;
+  }
+}
+
+table.table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  background-color: #f1f3f5;
+  color: #343a40;
+}
+
+table.table td {
+  vertical-align: top;
+  font-size: 0.9rem;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+
+.table-responsive .table tbody tr:hover {
+  background-color: rgba(214, 51, 108, 0.075);
+}
+
+.bg-white.rounded.shadow-sm {
+  background-color: #fff;
+}
+
+.btn.bg-danger {
+  background: linear-gradient(135deg, #d6336c, #c2255c) !important;
+  box-shadow: 0 4px 12px rgba(194, 37, 92, 0.25);
+}
+
+.btn.bg-danger:hover {
+  box-shadow: 0 6px 16px rgba(194, 37, 92, 0.35);
+}
+
+.form-label {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #6c757d;
+}
+
+.form-select {
+  border-radius: 0.75rem;
+  border-color: rgba(127, 63, 214, 0.4);
+  box-shadow: inset 0 1px 2px rgba(127, 63, 214, 0.08);
+}
+
+.form-select:focus {
+  border-color: #7f3fd6;
+  box-shadow: 0 0 0 0.2rem rgba(127, 63, 214, 0.25);
+}
+
+.spinner-theme {
+  color: #7f3fd6;
+}

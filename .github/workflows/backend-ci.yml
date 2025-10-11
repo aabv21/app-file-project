@@ -1,0 +1,38 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'api/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    paths:
+      - 'api/**'
+      - '.github/workflows/backend-ci.yml'
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Build API image (Node 18)
+        run: docker compose build api
+
+      - name: Install dependencies
+        run: docker compose run --rm api npm ci
+
+      - name: Run lint
+        run: docker compose run --rm api npm run lint
+
+      - name: Run tests
+        run: docker compose run --rm api npm test
+
+      - name: Cleanup
+        if: always()
+        run: docker compose down --volumes --remove-orphans
