@@ -1,4 +1,4 @@
-# Files Aggregation App
+# App File Project
 
 Monorepo containing the Node.js API (`api/`) and the React single-page application (`frontend/`). Each service ships with its own README that describes setup, scripts, and environment variables in detail.
 
