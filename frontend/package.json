@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "dotenv -e ../.env -- vite",
+    "dev:docker": "vite",
     "build": "vite build",
     "build:local": "dotenv -e ../.env -- vite build",
     "lint": "eslint .",

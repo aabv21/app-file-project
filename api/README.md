@@ -47,3 +47,50 @@ By default, the provided `.env.example` sets `RATE_LIMIT_MAX=10` with `RATE_LIMI
 - `GET /files/data?fileName=<name>`
 
 For Swagger documentation, start the API and browse to `/docs`.
+
+## 🚢 Deployment
+
+### Production
+
+**Live API**: https://app-file-project-api.onrender.com  
+**API Docs**: https://app-file-project-api.onrender.com/docs
+
+The API is deployed automatically to Render when changes are pushed to `main`.
+
+**Workflow**: `.github/workflows/backend-deploy.yml`
+
+### Render Setup
+
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Configure:
+   - **Root Directory**: `api`
+   - **Runtime**: Docker
+   - **Instance Type**: Free (or higher)
+4. Add environment variables in Render dashboard:
+   - `PORT=3000`
+   - `ECHO_SERVER_BASE_URL`
+   - `ECHO_SERVER_TOKEN`
+   - `ECHO_SERVER_TIMEOUT`
+   - `RATE_LIMIT_WINDOW_MS`
+   - `RATE_LIMIT_MAX`
+   - `REQUEST_DEBOUNCE_WINDOW_MS`
+   - `HTTP_LOG_FORMAT`
+5. Copy the Deploy Hook URL from Settings
+6. Add as GitHub secret: `RENDER_DEPLOY_HOOK_URL`
+
+### Manual Deployment
+
+Deployments are triggered automatically via GitHub Actions. To deploy manually:
+
+```bash
+# Push to main branch
+git push origin main
+
+# Or trigger via deploy hook
+curl -X POST $RENDER_DEPLOY_HOOK_URL
+```
+
+### Docker Deployment
+
+The API uses the `Dockerfile` in this directory for containerized deployment on Render.
