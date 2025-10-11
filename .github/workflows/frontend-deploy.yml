@@ -34,15 +34,7 @@ jobs:
         working-directory: frontend
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-        run: |
-          echo "Building with VITE_API_BASE_URL (value hidden for security)"
-          npm run build
-
-      - name: Verify build output
-        working-directory: frontend
-        run: |
-          echo "Checking if onrender.com URL is in the bundle:"
-          grep -o "onrender.com" dist/assets/*.js | head -5 || echo "URL not found in bundle"
+        run: npm run build
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
