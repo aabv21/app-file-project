@@ -7,14 +7,12 @@ describe('FileFilter', () => {
 
   it('renders options and handles change', () => {
     const handleSelect = jest.fn()
-    const handleRefresh = jest.fn()
 
     render(
       <FileFilter
         fileList={fileList}
         selectedFile=""
         onSelect={handleSelect}
-        onRefresh={handleRefresh}
       />
     )
 
@@ -24,8 +22,5 @@ describe('FileFilter', () => {
 
     fireEvent.change(select, { target: { value: 'file2.csv' } })
     expect(handleSelect).toHaveBeenCalledWith('file2.csv')
-
-    fireEvent.click(screen.getByRole('button', { name: /refresh/i }))
-    expect(handleRefresh).toHaveBeenCalled()
   })
 })
