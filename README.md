@@ -74,18 +74,9 @@ Both services deploy automatically on push to `main`:
 
 Configure these in your repository settings (`Settings → Secrets and variables → Actions`):
 
-| Secret | Description | Example |
-|--------|-------------|---------|
-| `RENDER_DEPLOY_HOOK_URL` | Render deploy hook URL | `https://api.render.com/deploy/srv-xxx?key=yyy` |
-| `VITE_API_BASE_URL` | Production API URL | `https://app-file-project-api.onrender.com` |
-| `ECHO_SERVER_BASE_URL` | External API endpoint | `https://echo-serv.tbxnet.com/v1/secret` |
-| `ECHO_SERVER_TOKEN` | External API token | `aSuperSecretKey` |
-| `ECHO_SERVER_TIMEOUT` | API timeout (ms) | `5000` |
-| `RATE_LIMIT_WINDOW_MS` | Rate limit window | `60000` |
-| `RATE_LIMIT_MAX` | Max requests per window | `60` |
-| `REQUEST_DEBOUNCE_WINDOW_MS` | Debounce window | `0` |
-| `HTTP_LOG_FORMAT` | Log format | `tiny` |
-| `PORT` | Backend port | `3000` |
+- **`RENDER_DEPLOY_HOOK_URL`**: Deploy hook URL from Render service settings
+- **`VITE_API_BASE_URL`**: Production API URL (e.g., your Render service URL)
+- Backend environment variables (see `.env.example` for the complete list)
 
 ### Manual Deployment
 
