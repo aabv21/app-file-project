@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
@@ -17,6 +18,14 @@ const HomePage = () => {
     dataLoaded,
   } = useFilesData();
 
+  const [showRenderWarning, setShowRenderWarning] = useState(false);
+
+  useEffect(() => {
+    if (window.location.hostname.endsWith('github.io')) {
+      setShowRenderWarning(true);
+    }
+  }, []);
+
   return (
     <div className='min-vh-100 bg-light d-flex flex-column'>
       <header className='bg-danger text-white py-3 shadow-sm'>
@@ -26,6 +35,14 @@ const HomePage = () => {
       </header>
       <main className='py-4 flex-grow-1'>
         <Container fluid className='px-3 px-md-5'>
+          {showRenderWarning && (
+            <Alert variant='warning' className='shadow-sm mb-4'>
+              The backend is hosted on Render and may go to sleep after long
+              periods of inactivity. If the first request fails, wait a few
+              seconds and refresh the page to wake it up.
+            </Alert>
+          )}
+
           <FileFilter
             fileList={fileList}
             selectedFile={selectedFile}

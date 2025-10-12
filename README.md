@@ -8,6 +8,8 @@ Full-stack application with automated CI/CD deployment to Render (backend) and G
 - **Backend API**: https://app-file-project-api.onrender.com
 - **API Docs**: https://app-file-project-api.onrender.com/docs
 
+> **Note:** The backend runs on Render's free tier and may sleep after long inactivity. If the first request fails, wait a few seconds and refresh so the service can wake up.
+
 ## 📁 Repository Structure
 
 - **`api/`** – Express.js REST API with Swagger documentation (Node 18)
