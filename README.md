@@ -1,61 +1,140 @@
 # App File Project
 
-Full-stack application with automated CI/CD deployment to Render (backend) and GitHub Pages (frontend).
+A full-stack file management application with automated CI/CD — backend deployed to Render, frontend to GitHub Pages, fully containerized with Docker Compose for local development.
 
-## 🚀 Live Deployment
+🌐 **Frontend:** [aabv21.github.io/app-file-project](https://aabv21.github.io/app-file-project/)
+⚙️ **Backend API:** [app-file-project-api.onrender.com](https://app-file-project-api.onrender.com)
+📄 **API Docs:** [app-file-project-api.onrender.com/docs](https://app-file-project-api.onrender.com/docs)
 
-- **Frontend**: https://aabv21.github.io/app-file-project/
-- **Backend API**: https://app-file-project-api.onrender.com
-- **API Docs**: https://app-file-project-api.onrender.com/docs
+> **Note:** The backend runs on Render's free tier and may sleep after inactivity. If the first request fails, wait a few seconds and retry.
 
-> **Note:** The backend runs on Render's free tier and may sleep after long inactivity. If the first request fails, wait a few seconds and refresh so the service can wake up.
+---
 
-## 📁 Repository Structure
+## Tech Stack
 
-- **`api/`** – Express.js REST API with Swagger documentation (Node 18)
-- **`frontend/`** – React 19 SPA with Redux Toolkit and Vite (Node 18)
-- **`docker-compose.yml`** – Local development environment
-- **`.github/workflows/`** – CI/CD pipelines
+![Node.js](https://img.shields.io/badge/Node.js_18-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Redux](https://img.shields.io/badge/Redux_Toolkit-764ABC?style=flat-square&logo=redux&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=swagger&logoColor=black)
 
-## 🛠️ Local Development
+---
 
-### Prerequisites
-- Docker and Docker Compose
-- Node.js 18+ (optional, for running outside Docker)
+## Architecture Overview
 
-### Option 1: Full Docker Setup (Recommended)
+```
+┌─────────────────────────────────────────────────────┐
+│              GitHub Actions CI/CD                   │
+│                                                     │
+│  frontend-ci → frontend-deploy → GitHub Pages      │
+│  backend-ci  → backend-deploy  → Render            │
+└──────────────────┬──────────────────────────────────┘
+                   │
+        ┌──────────┴──────────┐
+        │                     │
+┌───────▼────────┐   ┌────────▼────────┐
+│   Frontend     │   │   Backend API   │
+│   React 19     │──▶│   Express.js    │
+│   Redux TK     │   │   Swagger docs  │
+│   Vite         │   │   Node 18       │
+│ GitHub Pages   │   │     Render      │
+└────────────────┘   └─────────────────┘
+        │                     │
+        └──────────┬──────────┘
+                   │
+        ┌──────────▼──────────┐
+        │   Docker Compose    │  ← local dev
+        │  (api + frontend)   │
+        └─────────────────────┘
+```
+
+---
+
+## Key Features
+
+- 📁 **File management** — full CRUD operations via REST API
+- 📄 **Swagger docs** — interactive API documentation at `/docs`
+- 🔄 **Full CI/CD** — 4 GitHub Actions workflows (lint + test + deploy per service)
+- 🐳 **Docker Compose** — one command local setup for both services
+- ⚡ **Vite** — fast frontend builds with HMR
+- 🗃️ **Redux Toolkit** — predictable state management on the frontend
+- 🚀 **Zero-config deploy** — push to `main` and both services deploy automatically
+
+---
+
+## CI/CD Workflows
+
+| Workflow | Trigger | Action |
+|---|---|---|
+| `backend-ci.yml` | Push / PR | Lint + test backend |
+| `backend-deploy.yml` | Push to `main` | Deploy to Render |
+| `frontend-ci.yml` | Push / PR | Lint + test frontend |
+| `frontend-deploy.yml` | Push to `main` | Build + deploy to GitHub Pages |
+
+---
+
+## Project Structure
+
+```
+app-file-project/
+├── api/                    # Express.js REST API (Node 18)
+│   └── README.md           # API-specific docs
+├── frontend/               # React 19 SPA with Redux Toolkit + Vite
+│   └── README.md           # Frontend-specific docs
+├── .github/workflows/      # CI/CD pipelines
+├── docker-compose.yml      # Local development environment
+└── .env.example            # Environment variable template
+```
+
+---
+
+## Local Development
+
+**Prerequisites:** Docker & Docker Compose
+
+### Option 1 — Full Docker (Recommended)
 
 ```bash
+# Clone the repository
+git clone https://github.com/aabv21/app-file-project.git
+cd app-file-project
+
 # Copy environment variables
 cp .env.example .env
 
 # Start all services
 docker compose up --build
+```
 
-# Access the application
-# Frontend: http://localhost:5173
-# Backend: http://localhost:3000
-# API Docs: http://localhost:3000/docs
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend | http://localhost:3000 |
+| API Docs | http://localhost:3000/docs |
 
+```bash
 # Stop containers
 docker compose down
 ```
 
-### Option 2: Hybrid Setup (Backend in Docker, Frontend local)
+### Option 2 — Hybrid (Backend Docker + Frontend local)
 
 ```bash
 # Start only the backend
 docker compose up api
 
-# In another terminal, run frontend locally
+# In another terminal
 cd frontend
 npm install
 npm run dev
 ```
 
-## 🔧 Environment Variables
+---
 
-Copy `.env.example` to `.env` and configure as needed:
+## Environment Variables
 
 ```bash
 cp .env.example .env
@@ -63,36 +142,16 @@ cp .env.example .env
 
 See `.env.example` for all available configuration options.
 
-## 🚢 Deployment
+**Required GitHub Secrets** for CI/CD:
 
-### Automatic Deployment
+| Secret | Description |
+|---|---|
+| `RENDER_DEPLOY_HOOK_URL` | Deploy hook URL from Render service settings |
+| `VITE_API_BASE_URL` | Production API URL (your Render service URL) |
 
-Both services deploy automatically on push to `main`:
+---
 
-- **Backend**: Deploys to Render via deploy hook
-- **Frontend**: Deploys to GitHub Pages
-
-### Required GitHub Secrets
-
-Configure these in your repository settings (`Settings → Secrets and variables → Actions`):
-
-- **`RENDER_DEPLOY_HOOK_URL`**: Deploy hook URL from Render service settings
-- **`VITE_API_BASE_URL`**: Production API URL (e.g., your Render service URL)
-- Backend environment variables (see `.env.example` for the complete list)
-
-### Manual Deployment
-
-Trigger deployments manually via GitHub Actions:
-
-```bash
-# Deploy frontend
-gh workflow run frontend-deploy.yml
-
-# Deploy backend (via push to main)
-git push origin main
-```
-
-## 🧪 Testing & Linting
+## Testing & Linting
 
 ```bash
 # Backend
@@ -106,14 +165,35 @@ npm run lint
 npm test
 ```
 
-## 📚 Documentation
+---
 
-- **API Documentation**: See `api/README.md` or visit `/docs` endpoint
-- **Frontend Documentation**: See `frontend/README.md`
+## Manual Deployment
 
-## 🔄 CI/CD Workflows
+```bash
+# Trigger frontend deploy manually
+gh workflow run frontend-deploy.yml
 
-- **`backend-ci.yml`**: Lint and test backend on every push/PR
-- **`backend-deploy.yml`**: Deploy backend to Render on push to main
-- **`frontend-ci.yml`**: Lint and test frontend on every push/PR
-- **`frontend-deploy.yml`**: Build and deploy frontend to GitHub Pages on push to main
+# Trigger backend deploy (push to main)
+git push origin main
+```
+
+---
+
+## Additional Documentation
+
+- [API README](api/README.md)
+- [Frontend README](frontend/README.md)
+
+---
+
+## Related Projects
+
+- [B2BOrders](https://github.com/aabv21/B2BOrders) — B2B order management with AWS Lambda
+- [photo-post](https://github.com/aabv21/photo-post) — Microservices with Kafka & Redis
+- [cqrs-blog-app](https://github.com/aabv21/cqrs-blog-app) — CQRS pattern with microservices
+
+---
+
+<div align="center">
+  <sub>Built by <a href="https://github.com/aabv21">Andrés Buelvas</a> · Full Stack Engineer</sub>
+</div>
